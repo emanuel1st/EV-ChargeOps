@@ -6,6 +6,10 @@
 
 ## Introdução
 
+O crescimento da mobilidade elétrica tem impulsionado a adoção de veículos elétricos em todo o mundo, incluindo o Brasil. Com o aumento da frota desses veículos, cresce também a necessidade de expandir e modernizar a infraestrutura de recarga, especialmente em ambientes compartilhados como condomínios residenciais, edifícios corporativos e campus universitários. Nesses locais, o gerenciamento das sessões de recarga, a identificação dos usuários e a cobrança individual do consumo tornam-se desafios importantes para garantir uma operação eficiente e justa.
+
+Nesse contexto, surge o **EV ChargeOps**, uma plataforma desenvolvida para transformar os dados gerados pelas sessões de recarga em informações úteis para usuários e gestores. A proposta busca integrar monitoramento, controle de consumo, rateio automatizado e recursos de inteligência artificial em uma única solução, proporcionando maior transparência, eficiência operacional e apoio à tomada de decisões. Este documento apresenta os resultados das pesquisas realizadas na Sprint 01, abordando o contexto do problema, aspectos regulatórios e técnicos, arquitetura da solução proposta e o planejamento para a fase de desenvolvimento da Sprint 02.
+
 ## Frente 1 - Contexto e Problema
 
 ### Infraestrutura de Recarga Compartilhada
@@ -113,13 +117,37 @@ Entre os principais dados disponibilizados estão o status do carregador (como o
 
 ### Opção C - APIs Complementares
 
+#### Open Charge Map API
+
+A Open Charge Map API é uma plataforma aberta que disponibiliza informações sobre estações de recarga de veículos elétricos em diversos países, permitindo a integração desses dados em aplicativos e sistemas de gestão. Por meio de requisições em formatos como JSON, a API fornece informações detalhadas sobre a localização dos carregadores, incluindo endereço, coordenadas geográficas, operador responsável e regras de acesso. Também disponibiliza dados técnicos como potência do carregador, quantidade de conectores, tipos de tomadas disponíveis e informações sobre tarifas ou custos de utilização. Além disso, a plataforma conta com recursos colaborativos que permitem o compartilhamento de comentários, avaliações, fotos e registros de uso feitos pelos próprios usuários, contribuindo para a atualização e confiabilidade das informações disponíveis.
+
+No EV ChargeOps, essa API poderia ser utilizada para exibir carregadores próximos aos usuários, auxiliar no planejamento de novas instalações e fornecer informações complementares sobre a infraestrutura de recarga existente na região.
+
+#### ANEEL Open Data
+
+O Portal de Dados Abertos da ANEEL disponibiliza informações públicas sobre o setor elétrico brasileiro, permitindo que empresas, pesquisadores e desenvolvedores utilizem esses dados para análises, estudos e desenvolvimento de soluções. A plataforma reúne dezenas de conjuntos de dados relacionados à geração, distribuição e comercialização de energia elétrica, incluindo informações sobre usinas, capacidade instalada, redes de distribuição, subestações, inspeções, manutenção da infraestrutura elétrica e componentes tarifários. Além disso, o portal oferece dados sobre o mercado de energia, como informações fornecidas pelas distribuidoras e indicadores do setor, possibilitando a realização de análises estratégicas e o acompanhamento da evolução da infraestrutura energética no país.
+
+Esses dados poderiam ser utilizados pelo EV ChargeOps para gerar análises energéticas, comparar padrões de consumo e produzir relatórios gerenciais que auxiliem gestores na tomada de decisão sobre a infraestrutura de recarga.
+
 ## Frente 3 - Arquitetura e IA
 
 ### Arquitetura Proposta
 
+A plataforma EV ChargeOps será composta por quatro camadas principais. A primeira é a camada física, formada pelos carregadores de veículos elétricos, responsáveis por realizar a recarga e registrar dados como consumo de energia, duração da sessão e potência utilizada. A segunda é a camada de conectividade, composta pelas interfaces de comunicação do carregador, como Wi-Fi, LAN, Bluetooth e RS-485, que permitem a transmissão dos dados para sistemas externos e plataformas de monitoramento.
+
+A terceira é a camada de aplicação, responsável pelo processamento das informações recebidas. Nessa camada estarão o banco de dados, as regras de negócio, o sistema de cálculo de rateio e os recursos de inteligência artificial utilizados para análise e previsão de consumo. Por fim, a camada de apresentação será composta pelas interfaces utilizadas pelos gestores e usuários, permitindo acompanhar sessões de recarga, consultar relatórios, visualizar cobranças e acessar informações sobre o consumo de energia.
+
 ### Fluxo dos Dados
 
+O fluxo de dados inicia quando o usuário se identifica e conecta seu veículo ao carregador. Durante a sessão, o equipamento registra informações como horário de início, horário de término, potência utilizada, energia consumida em kWh e identificação do usuário. Esses dados são transmitidos por meio das interfaces de comunicação para a plataforma de gerenciamento, onde ficam armazenados em um banco de dados.
+
+Após o armazenamento, as informações passam pelas regras de negócio do sistema, que realizam o cálculo do consumo individual e geram os valores que serão utilizados na cobrança. Nesse processo, a inteligência artificial pode ser utilizada para identificar padrões de utilização, prever demandas futuras de energia e detectar possíveis anomalias ou comportamentos fora do padrão. Após o processamento, as informações são disponibilizadas no dashboard da plataforma e utilizadas para a geração da fatura individual de cada usuário.
+
 ### Modelo de Rateio
+
+A equipe propõe um modelo de rateio baseado no consumo individual de energia, utilizando como principal variável a quantidade de energia consumida em quilowatt-hora (kWh) durante cada sessão de recarga. O valor da fatura será calculado multiplicando-se o total de kWh consumidos pela tarifa de energia aplicada pelo condomínio ou pela administradora do sistema. Caso necessário, poderá ser adicionada uma taxa fixa destinada à manutenção da infraestrutura de recarga.
+
+Em situações excepcionais, o sistema adotará regras específicas para garantir justiça na cobrança. Em sessões interrompidas, será cobrado apenas o valor correspondente à energia efetivamente consumida até o momento da interrupção. Usuários que não realizarem nenhuma recarga durante o mês não terão cobrança de consumo. Nos casos em que uma mesma unidade possuir dois ou mais veículos cadastrados, o sistema somará o consumo de todas as sessões vinculadas àquela unidade para gerar uma única fatura mensal. Isso garante transparência, simplicidade na cobrança e distribuição justa dos custos entre os usuários da infraestrutura compartilhada.
 
 ### Opção A: Benchmarking de Modelos de Rateio
 
@@ -168,4 +196,58 @@ Para o EV ChargeOps, será adotado o modelo de rateio por consumo individual via
 
 ## Plano da Sprint 02
 
+## Plano para a Sprint 02 – Desenvolvimento e Prototipação
+
+A Sprint 02 será dedicada ao desenvolvimento da solução proposta na fase de pesquisa e documentação. O objetivo será transformar os conceitos definidos na Sprint 01 em um protótipo funcional capaz de registrar sessões de recarga, calcular o consumo individual dos usuários e gerar informações para gestão da infraestrutura compartilhada.
+
+Inicialmente, será realizada a modelagem e implementação do banco de dados, definindo as entidades necessárias para armazenar informações de usuários, unidades, carregadores, sessões de recarga e faturas. Em seguida, será desenvolvido o back-end da aplicação, responsável pelo processamento dos dados, aplicação das regras de negócio e cálculo do rateio individual de consumo.
+
+Na etapa seguinte, será realizada a integração com os dados do carregador GoodWe ou com dados simulados, permitindo registrar informações como consumo de energia, duração das sessões e identificação dos usuários. Após isso, será implementado o módulo responsável pela geração das cobranças e relatórios de utilização da infraestrutura.
+
+Por fim, serão desenvolvidas as interfaces da plataforma para gestores e usuários, permitindo acompanhar sessões de recarga, consultar históricos de consumo e visualizar valores cobrados. Também será criada uma funcionalidade baseada em inteligência artificial para análise de padrões de utilização e previsão de consumo futuro. A sprint será concluída com testes, ajustes finais e preparação do material para apresentação e vídeo pitch do projeto.
+
 ## Referências
+
+### Infraestrutura de Recarga e Mobilidade Elétrica
+
+- [PUC Minas – Estudo sobre veículos elétricos e infraestrutura de recarga](https://bib.pucminas.br/pergamumweb/vinculos/0000b5/0000b5c6.pdf)
+- [Elétricos App – Pontos de recarga públicos em 2026: custos e segurança](https://eletricos.app/noticias/pontos-recarga-publicos-2026-custos-seguranca)
+- [CNN Brasil – Setor de carros elétricos enfrenta desafios de infraestrutura para crescer](https://www.cnnbrasil.com.br/economia/setor-de-carros-eletricos-enfrenta-desafios-de-infraestrutura-para-crescer/)
+- [Tegra Incorporadora – Carro elétrico e condomínios: infraestrutura de recarga](https://www.tegraincorporadora.com.br/blog/dicasedecor/carro-eletrico-e-condominio-predios-com-infraestrutura-de-recarga)
+
+### Modelos de Cobrança e Rateio
+
+- [Voltbras – Tudo sobre a cobrança de recargas de carros elétricos no Brasil](https://voltbras.com/tudo-sobre-a-cobranca-de-recargas-de-carros-eletricos-no-brasil/)
+
+### Regulamentação e ANEEL
+
+- [LegisWeb – Resolução Normativa ANEEL nº 1000/2021](https://www.legisweb.com.br/legislacao/?id=490988)
+- [Atos Oficiais – Texto da Resolução Normativa nº 1000/2021](https://atosoficiais.com.br/aneel/resolucao-normativa-n-1000-2021-estabelece-as-regras-de-prestacao-do-servico-publico-de-distribuicao-de-energia-eletrica-revoga-as-resolucoes-normativas-aneel-no-414-de-9-de-setembro-de-2010-no-470-de-13-de-dezembro-de-2011-no-901-de-8-de-dezembro-de-2020-e-da-outras-providencias?origin=instituicao)
+- [ANEEL – Resolução 1000: direitos sobre energia elétrica](https://www.gov.br/aneel/pt-br/assuntos/campanhas/resolucao-1000-da-aneel-seus-direitos-sobre-energia-eletrica-agora-num-so-lugar-2022)
+- [Voltera – Tudo sobre a ANEEL](https://blog.voltera.com.br/tudo-sobre-a-aneel/)
+
+### GoodWe HCA G2 e Plataforma SEMS
+
+- [GoodWe Brasil – Carregador HCA G2](https://br.goodwe.com/carregadores-hca-g2-goodwe)
+- [GoodWe Brasil – HCA EV Charger](https://br.goodwe.com/hca-evcharger)
+- [Manual de Instruções HCA G2](https://gfx3.senetic.com/akeneo-catalog/6/7/4/f/674f179a09124e654cbc41cb6612408467e39150_Instru____es_de_uso.pdf)
+- [Canal Solar – GoodWe HCA G2 Electric Vehicle Charging](https://canalsolar.com.br/en/goodwe-hca-g2-electric-vehicle-charging/)
+- [GoodWe – SEMS Portal User Manual](https://en.goodwe.com/Ftp/EN/Downloads/User%20Manual/GW_SEMS%20Portal-User%20Manual-EN.pdf)
+- [GoodWe Community – SEMS API Documentation](https://community.goodwe.com/static/images/2022-11-08281223.pdf;jsessionid=726F7F4BB3CF930E5C1AACD82142805B)
+- [GoodWe Community – Open API Guide](https://community.goodwe.com/static/images/2024-08-20597794.pdf;jsessionid=4AE5B640659703459137E5AEE71D221A)
+- [OpenHAB – Integração SEMS Portal](https://www.openhab.org/addons/bindings/semsportal/)
+
+### Open Charge Map API
+
+- [Open Charge Map – API Oficial](https://www.openchargemap.org/develop/api)
+- [DLT Hub – Open Charge Map Source](https://dlthub.com/context/source/open-charge-map)
+- [MCP Market – Open Charge Map API](https://mcpmarket.com/server/open-charge-map-1)
+- [Public API – Open Charge Map](https://publicapi.dev/open-charge-map-api)
+- [Microsoft Learn – Open Charge Map Connector](https://learn.microsoft.com/en-us/connectors/openchargemapip/)
+
+### Dados Abertos da ANEEL
+
+- [ANEEL – Novos conjuntos de dados abertos](https://www.gov.br/aneel/pt-br/assuntos/noticias/2023/dados-abertos-aneel-disponibiliza-novos-conjunto-de-dados)
+- [ANEEL – Dados do BDGD, SIGET e SAMP](https://www.gov.br/aneel/pt-br/assuntos/noticias/2023/conjuntos-de-dados-do-bdgd-siget-e-samp-estao-disponiveis-no-portal-de-dados-abertos-da-aneel)
+- [Portal de Dados Abertos da ANEEL](https://dadosabertos.aneel.gov.br/dataset/?tags=tarifa+de+uso+do+sistema+de+distribui%C3%A7%C3%A3o)
+- [ANEEL Open Data ArcGIS](https://dadosabertos-aneel.opendata.arcgis.com/)
