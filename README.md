@@ -194,8 +194,6 @@ A análise dos modelos mostra que sistemas baseados em identificação do usuár
 
 Para o EV ChargeOps, será adotado o modelo de rateio por consumo individual via sistema inteligente (app/RFID), pois ele se integra diretamente com a proposta da plataforma, permite automação do processo de cobrança e possibilita a aplicação de inteligência artificial para análise de consumo, previsões e detecção de padrões de uso.
 
-## Plano da Sprint 02
-
 ## Plano para a Sprint 02 – Desenvolvimento e Prototipação
 
 A Sprint 02 será dedicada ao desenvolvimento da solução proposta na fase de pesquisa e documentação. O objetivo será transformar os conceitos definidos na Sprint 01 em um protótipo funcional capaz de registrar sessões de recarga, calcular o consumo individual dos usuários e gerar informações para gestão da infraestrutura compartilhada.
