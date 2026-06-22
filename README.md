@@ -137,6 +137,12 @@ A plataforma EV ChargeOps será composta por quatro camadas principais. A primei
 
 A terceira é a camada de aplicação, responsável pelo processamento das informações recebidas. Nessa camada estarão o banco de dados, as regras de negócio, o sistema de cálculo de rateio e os recursos de inteligência artificial utilizados para análise e previsão de consumo. Por fim, a camada de apresentação será composta pelas interfaces utilizadas pelos gestores e usuários, permitindo acompanhar sessões de recarga, consultar relatórios, visualizar cobranças e acessar informações sobre o consumo de energia.
 
+#### Diagrama de Arquitetura
+
+A arquitetura da plataforma EV ChargeOps está representada abaixo:
+
+[Arquitetura EV ChargeOps](diagrama.png)
+
 ### Fluxo dos Dados
 
 O fluxo de dados inicia quando o usuário se identifica e conecta seu veículo ao carregador. Durante a sessão, o equipamento registra informações como horário de início, horário de término, potência utilizada, energia consumida em kWh e identificação do usuário. Esses dados são transmitidos por meio das interfaces de comunicação para a plataforma de gerenciamento, onde ficam armazenados em um banco de dados.
