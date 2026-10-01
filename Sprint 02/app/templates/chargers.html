@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Carregadores - EV ChargeOps</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>EV ChargeOps</h1>
+        <p>Carregadores disponíveis</p>
+    </header>
+
+    <main>
+
+        <section class="tabela">
+
+            <div class="tabela-header">
+                <h2>Carregadores</h2>
+
+                <a href="{{ url_for('dashboard.dashboard') }}" class="botao">
+                    ← Voltar
+                </a>
+            </div>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Identificação</th>
+                        <th>Localização</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for carregador in carregadores %}
+
+                    <tr>
+                        <td>#{{ carregador[0] }}</td>
+                        <td>{{ carregador[1] }}</td>
+                        <td>{{ carregador[2] }}</td>
+                        <td>{{ carregador[3] }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

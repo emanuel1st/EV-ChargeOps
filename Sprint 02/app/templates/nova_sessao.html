@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova Sessão - EV ChargeOps</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>EV ChargeOps</h1>
+        <p>Registrar nova sessão de carregamento</p>
+    </header>
+
+    <main>
+
+        <section class="tabela">
+
+    <div class="tabela-header">
+        <h2>Nova sessão</h2>
+
+        <a href="{{ url_for('dashboard.dashboard') }}" class="botao">
+            ← Voltar
+        </a>
+    </div>
+
+            <form method="POST">
+
+                <label>Usuário</label>
+                <select name="usuario_id" required>
+
+                    <option value="">Selecione o usuário</option>
+
+                    {% for usuario in usuarios %}
+                    <option value="{{ usuario[0] }}">
+                        {{ usuario[1] }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+
+                <label>Veículo</label>
+                <select name="veiculo_id" required>
+
+                    <option value="">Selecione o veículo</option>
+
+                    {% for veiculo in veiculos %}
+                    <option value="{{ veiculo[0] }}">
+                        {{ veiculo[1] }} - {{ veiculo[2] }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+
+                <label>Carregador</label>
+                <select name="carregador_id" required>
+
+                    <option value="">Selecione o carregador</option>
+
+                    {% for carregador in carregadores %}
+                    <option value="{{ carregador[0] }}">
+                        {{ carregador[1] }} - {{ carregador[2] }}
+                    </option>
+                    {% endfor %}
+
+                </select>
+
+
+                <label>Início</label>
+                <input
+                    type="datetime-local"
+                    name="inicio"
+                    required
+                >
+
+
+                <label>Fim</label>
+                <input
+                    type="datetime-local"
+                    name="fim"
+                    required
+                >
+
+
+                <label>Consumo (kWh)</label>
+                <input
+                    type="number"
+                    name="kwh"
+                    step="0.1"
+                    min="0"
+                    placeholder="Ex.: 18.5"
+                    required
+                >
+
+
+                <label>Potência (kW)</label>
+                <input
+                    type="number"
+                    name="potencia_kw"
+                    step="0.1"
+                    min="0"
+                    placeholder="Ex.: 7.4"
+                    required
+                >
+
+
+                <button type="submit">
+                    Registrar sessão
+                </button>
+
+            </form>
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

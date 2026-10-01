@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Faturas - EV ChargeOps</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>EV ChargeOps</h1>
+        <p>Faturas e consumo dos usuários</p>
+    </header>
+
+    <main>
+
+        <section class="tabela">
+
+<form method="POST" action="{{ url_for('invoices.nova_fatura') }}">
+
+    <label>Usuário</label>
+
+    <select name="usuario_id" required>
+
+        <option value="">Selecione o usuário</option>
+
+        {% for usuario in usuarios %}
+
+        <option value="{{ usuario[0] }}">
+            {{ usuario[1] }}
+        </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <label>Mês da fatura</label>
+
+    <input
+        type="month"
+        name="mes"
+        value="2026-09"
+        required
+    >
+
+
+    <button type="submit">
+        Gerar fatura
+    </button>
+
+</form>
+
+            <section class="tabela">
+
+    <div class="tabela-header">
+        <h2>Faturas</h2>
+
+        <a href="{{ url_for('dashboard.dashboard') }}" class="botao">
+            ← Voltar
+        </a>
+    </div>
+                <a href="/dashboard" class="botao">
+                    Voltar ao Dashboard
+                </a>
+            </div>
+
+            {% if faturas %}
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Mês</th>
+                        <th>Consumo</th>
+                        <th>Tarifa</th>
+                        <th>Taxa fixa</th>
+                        <th>Valor total</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for fatura in faturas %}
+
+                    <tr>
+                        <td>{{ fatura[1] }}</td>
+                        <td>{{ fatura[2] }}</td>
+                        <td>{{ fatura[3] }} kWh</td>
+                        <td>R$ {{ "%.2f"|format(fatura[4]) }}</td>
+                        <td>R$ {{ "%.2f"|format(fatura[5]) }}</td>
+                        <td><strong>R$ {{ "%.2f"|format(fatura[6]) }}</strong></td>
+                        <td>{{ fatura[7] }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <p>Nenhuma fatura cadastrada ainda.</p>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

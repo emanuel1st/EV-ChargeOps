@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Análise Inteligente - EV ChargeOps</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>EV ChargeOps</h1>
+        <p>Análise inteligente do consumo</p>
+    </header>
+
+    <main>
+
+        <section class="cards">
+
+            <div class="card">
+                <h2>Total de sessões</h2>
+                <p>{{ analise.total_sessoes }}</p>
+            </div>
+
+            <div class="card">
+                <h2>Consumo total</h2>
+                <p>{{ "%.2f"|format(analise.consumo_total) }} kWh</p>
+            </div>
+
+            <div class="card">
+                <h2>Consumo médio</h2>
+                <p>{{ "%.2f"|format(analise.consumo_medio) }} kWh</p>
+            </div>
+
+            <div class="card">
+                <h2>Maior consumo</h2>
+                <p>{{ "%.2f"|format(analise.maior_consumo) }} kWh</p>
+            </div>
+
+            <div class="card">
+                <h2>Previsão próxima sessão</h2>
+                <p>{{ "%.2f"|format(previsao.previsao_proxima_sessao) }} kWh</p>
+            </div>
+
+        </section>
+
+        <section class="tabela">
+
+           <section class="tabela">
+
+    <div class="tabela-header">
+        <h2>Análise do Comsumo</h2>
+
+        <a href="{{ url_for('dashboard.dashboard') }}" class="botao">
+            ← Voltar
+        </a>
+    </div>
+
+            <p>
+                O sistema analisou as sessões de carregamento registradas
+                e calculou indicadores de consumo.
+            </p>
+
+        </section>
+
+        <section class="tabela">
+
+            <h2>Detecção de anomalias</h2>
+
+            {% if anomalias.total_anomalias == 0 %}
+
+                <p>
+                    Nenhuma possível anomalia foi identificada nas sessões registradas.
+                </p>
+
+            {% else %}
+
+                <p>
+                    Foram identificadas {{ anomalias.total_anomalias }}
+                    possível(is) anomalia(s).
+                </p>
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th>Sessão</th>
+                            <th>Usuário</th>
+                            <th>Consumo</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for anomalia in anomalias.anomalias %}
+
+                        <tr>
+                            <td>#{{ anomalia.id }}</td>
+                            <td>Usuário #{{ anomalia.usuario_id }}</td>
+                            <td>{{ "%.2f"|format(anomalia.kwh) }} kWh</td>
+                            <td>{{ anomalia.inicio }}</td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            {% endif %}
+
+        </section>
+
+    </main>
+
+</body>
+
+</html>

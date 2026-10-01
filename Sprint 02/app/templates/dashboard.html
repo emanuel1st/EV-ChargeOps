@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EV ChargeOps</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>EV ChargeOps</h1>
+        <p>Gestão inteligente de carregamento de veículos elétricos</p>
+    </header>
+
+    <main>
+
+        <section class="cards">
+
+            <div class="card">
+                <h2>Consumo</h2>
+                <p>{{ total_kwh }} kWh</p>
+            </div>
+
+            <div class="card">
+                <h2>Sessões</h2>
+                <p>{{ total_sessoes }}</p>
+            </div>
+
+            <div class="card">
+                <h2>Faturamento</h2>
+                <p>R$ {{ "%.2f"|format(total_faturamento) }}</p>
+            </div>
+
+            <div class="card">
+                <h2>Usuários</h2>
+                <p>{{ total_usuarios }}</p>
+            </div>
+
+        </section>
+
+       <section class="tabela">
+
+   <div class="tabela-header">
+    <h2>Últimas sessões</h2>
+
+    <div class="acoes">
+
+     <a href="{{ url_for('ai.analise_ia') }}" class="botao">
+        Análise IA
+        </a>
+
+        <a href="{{ url_for('sessions.nova_sessao') }}" class="botao">
+          + Nova sessão
+      </a>
+
+      <a href="{{ url_for('invoices.faturas') }}" class="botao">
+          Faturas
+      </a>
+
+     <a href="{{ url_for('users.usuarios') }}" class="botao">
+            Usuários
+        </a>
+
+     <a href="{{ url_for('chargers.carregadores') }}" class="botao">
+            Carregadores
+        </a>
+
+    </div>
+</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Usuário</th>
+                        <th>Veículo</th>
+                        <th>Carregador</th>
+                        <th>Consumo</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for sessao in sessoes %}
+
+                    <tr>
+                        <td>{{ sessao[0] }}</td>
+                        <td>{{ sessao[1] }}</td>
+                        <td>{{ sessao[2] }}</td>
+                        <td>{{ sessao[3] }} kWh</td>
+                        <td>{{ sessao[4] }}</td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</body>
+</html>
